@@ -75,16 +75,16 @@ def pick_state_dict(checkpoint, use_raw=False):
 
 
 def resolve_model_kwargs(ckpt_path, checkpoint):
-    # The final package contains only GSDTNet. Checkpoint config is read only
-    # for metadata compatibility; it no longer selects ablation branches.
+    # The package contains only GSDTNet. Checkpoint config is read only
+    # for metadata compatibility and does not select model variants.
     return {'pretrained': False}
 
 
-def _remap_legacy_v4b_keys(state_dict):
-    """Map keys from the old v4b_res_region ablation package to GSDTNet names.
+def _remap_checkpoint_keys(state_dict):
+    """Map renamed checkpoint keys to the current GSDTNet module names.
 
-    This keeps old final-branch checkpoints usable after the model/module rename.
-    The mapping does not change tensor values or model logic.
+    The mapping keeps compatible checkpoints usable after module-name cleanup.
+    It does not change tensor values or model logic.
     """
     remapped = {}
     replacements = [
@@ -108,7 +108,7 @@ def _remap_legacy_v4b_keys(state_dict):
     return remapped
 
 def load_model_state(model, state_dict):
-    state_dict = _remap_legacy_v4b_keys(state_dict)
+    state_dict = _remap_checkpoint_keys(state_dict)
     try:
         model.load_state_dict(state_dict, strict=True)
     except RuntimeError as exc:
@@ -160,7 +160,7 @@ def _save_aux_panel(root, dataset, name, pred_u8, gt_u8, depth_t, target_size):
     while len(cells) < 4:
         cells.append(np.full_like(cells[0], 255))
     panel = np.concatenate(cells, axis=1)
-    out_name = os.path.splitext(name)[0] + '_early_aux_panel.jpg'
+    out_name = os.path.splitext(name)[0] + '_aux_panel.jpg'
     cv2.imwrite(os.path.join(out_dir, out_name), panel, [int(cv2.IMWRITE_JPEG_QUALITY), 90])
 
 
