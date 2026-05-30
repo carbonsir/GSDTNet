@@ -1,44 +1,117 @@
-# GSDTNet
+# GSDTNet: Geometry-aware Semantic-Detail Transformer for Lightweight Pseudo-RGB-D Camouflaged Object Detection
 
-Official PyTorch implementation of **GSDTNet: Geometry-aware Semantic-Detail Transformer for Lightweight Pseudo-RGB-D Camouflaged Object Detection**.
+[![Manuscript](https://img.shields.io/badge/Manuscript-Submitted-blue)](#paper-and-code-relationship)
+[![License](https://img.shields.io/badge/License-Academic%20Research-lightgrey.svg)](#license)
 
-GSDTNet is a lightweight pseudo-RGB-D camouflaged object detection network. It uses an RGB image and an offline pseudo-depth map as input, projects them into a compact pseudo-RGB-D representation, extracts multi-level features with EfficientNet-B0, recalibrates shallow detail features with the Geometry-aware Semantic-Detail Transformer (GSDT), and predicts camouflaged object masks with a lightweight CGG decoder.
+## Recommended Citation
 
-## Highlights
+If you use this code, trained weights, prediction maps, pseudo-depth maps, or experimental results in your research, please cite the related manuscript.
 
-- **Pseudo-RGB-D single-stream design**: RGB and pseudo-depth are fused by a lightweight 1×1 adapter before feature extraction.
-- **GSDT module**: high-level semantics guide shallow detail recalibration, while pseudo-depth-derived geometry improves structure localization.
-- **Semantic region residual compensation**: a zero-initialized region branch stabilizes training and gradually provides region-level compensation.
-- **Lightweight decoder**: a CGG-based top-down decoder produces multi-scale mask predictions and an auxiliary edge prediction.
-- **Efficient COD model**: designed for a favorable accuracy-efficiency trade-off on CAMO, COD10K, and NC4K.
+The manuscript is currently under submission. The official citation information will be updated after the paper is accepted or published.
 
-## Network Overview
+```bibtex
+@article{gsdtnet2026,
+  title={GSDTNet: Geometry-aware Semantic-Detail Transformer for Lightweight Pseudo-RGB-D Camouflaged Object Detection},
+  author={Authors},
+  journal={The Visual Computer},
+  year={2026},
+  note={Manuscript submitted.}
+}
+```
+
+---
+
+## Abstract
+
+<p align="justify">
+Camouflaged object detection (COD) remains challenging because camouflaged targets usually have weak foreground-background contrast, ambiguous boundaries, and complex object structures. This repository provides the official implementation of <b>GSDTNet</b>, a lightweight pseudo-RGB-D COD network based on a <b>Geometry-aware Semantic-Detail Transformer</b> (GSDT). GSDT recalibrates shallow detail features under high-level semantic guidance and uses pseudo-depth-derived geometric cues as lightweight structural guidance. With a single-stream pseudo-RGB-D encoder and an efficient decoder, GSDTNet achieves a favorable accuracy-efficiency trade-off with 4.13M parameters and 1.52G FLOPs, excluding the offline pseudo-depth generation process.
+</p>
+
+---
+
+## Paper and Code Relationship
+
+This repository contains the implementation corresponding to the submitted manuscript:
+
+**GSDTNet: Geometry-aware Semantic-Detail Transformer for Lightweight Pseudo-RGB-D Camouflaged Object Detection**
+
+The paper is currently in the manuscript submission stage. If you use this repository, please cite the submitted manuscript. The BibTeX entry will be updated after formal acceptance or publication.
+
+---
+
+## Download Resources
+
+To improve reproducibility, this repository provides or points to source code, trained model weights, prediction maps, pseudo-depth preparation, and COD benchmark datasets.
+
+### Model weights and prediction maps
+
+| Resource | Baidu Netdisk | Extraction Code |
+|---|---|---|
+| GSDTNet prediction maps / experimental results | https://pan.baidu.com/s/1esOes8En-lfgAugIYQvs4A?pwd=wpe7 | wpe7 |
+| GSDTNet pre-trained weights | https://pan.baidu.com/s/1Iz02YaItxvPlpAuICyeblg?pwd=e4x4 | e4x4 |
+
+Google Drive mirrors:
+
+| Resource | Link |
+|---|---|
+| GSDTNet pre-trained weights | [Google Drive](https://drive.google.com/file/d/1wR6ukLUXvJ8hfVT5eq1mjOUVM7dLZSuv/view?usp=drive_link) |
+| GSDTNet prediction maps / experimental results | [Google Drive](https://drive.google.com/file/d/1BsBFn1SP_b7-lmGgtcYH0jMr402GDekE/view?usp=drive_link) |
+
+### Pseudo-depth maps
+
+GSDTNet uses fixed pseudo-depth maps as auxiliary inputs. The manuscript experiments generate pseudo-depth maps offline using Depth Anything V2, and the generated maps should be placed in the `Depth/` folders shown in the dataset structure below.
+
+| Resource | Link |
+|---|---|
+| Depth Anything V2 code and model checkpoints | [Official GitHub](https://github.com/DepthAnything/Depth-Anything-V2) |
+| Pre-generated pseudo-depth maps for this repository | To be updated by the authors |
+
+### COD benchmark datasets
+
+Raw COD images are not redistributed in this repository because of dataset license restrictions. Please download the original datasets from the official or commonly used benchmark sources and organize them as described below.
+
+| Dataset Resource | Google Drive / Project Page | Baidu Netdisk / Code |
+|---|---|---|
+| CAMO dataset | [CAMO project page](https://sites.google.com/view/ltnghia/research/camo) | - |
+| COD10K training set | [Google Drive](https://drive.google.com/file/d/1D9bf1KeeCJsxxri6d2qAC7z6O1X_fxpt/view?usp=sharing) | Baidu code: `djq2` |
+| COD10K-test + CAMO-test + CHAMELEON test set | [Google Drive](https://drive.google.com/file/d/1QEGnP9O7HbN_2tH999O3HRIsErIVYalx/view?usp=sharing) | Baidu code: `z83z` |
+| COD10K full package | [Google Drive](https://drive.google.com/file/d/1vRYAie0JcNStcSwagmCq55eirGyMYGm5/view?usp=sharing) | Baidu code: `w3up` |
+| NC4K test set | [Google Drive](https://drive.google.com/file/d/1kzpX_U3gbgO9MuwZIWTuRVpiB7V6yrAQ/view?usp=sharing) | Baidu code: `d581` |
+
+---
+
+## Overall Architecture
 
 ```text
 RGB image + pseudo-depth map
-        |
-PseudoRGBDAdapter
-        |
-EfficientNet-B0 encoder
-        |
-F1, F2, F3, F4, F5
-        |
-GSDT semantic-detail-geometric recalibration
-        |
-Enhanced F2 + F3/F4/F5
-        |
-CGGDecoder
-        |
-Mask predictions + auxiliary edge prediction
+    -> PseudoRGBDAdapter
+    -> EfficientNet-B0 encoder
+    -> Geometry-aware Semantic-Detail Transformer
+    -> CGGDecoder
+    -> mask predictions + auxiliary edge prediction
 ```
 
-## Repository Structure
+Main module correspondence:
+
+| Manuscript term | Code implementation |
+|---|---|
+| GSDTNet | `Model/GSDTNet.py::GSDTNet` |
+| Pseudo-RGB-D Adapter | `PseudoRGBDAdapter` |
+| EfficientNet-B0 Encoder | `GSDTNet.encoder` |
+| Geometry-aware Semantic-Detail Transformer | `GSDT` |
+| Depth-guided Geometry Gate | `GSDT.depth_guided_geometry_gate` |
+| Semantic Region Residual Compensation | `GSDT.semantic_region_gate` and zero-initialized `region_scale` |
+| CGG Decoder | `CGGDecoder` |
+
+---
+
+## Project Structure
 
 ```text
 GSDTNet/
 ├── Model/
-│   ├── EfficientNet.py
 │   ├── GSDTNet.py
+│   ├── EfficientNet.py
 │   └── modules.py
 ├── utils/
 │   ├── config.py
@@ -51,23 +124,55 @@ GSDTNet/
 └── README.md
 ```
 
-## Environment
+Only the final GSDTNet model code is included in this clean repository.
 
-The code is implemented with PyTorch. A typical environment is:
+---
 
-```bash
-conda create -n gsdt python=3.10 -y
-conda activate gsdt
+## Requirements
 
-pip install torch torchvision --index-url https://download.pytorch.org/whl/cu121
-pip install opencv-python pillow numpy tqdm scipy
+The manuscript experiments were conducted with PyTorch 2.5.1 on a single NVIDIA RTX 3090 GPU.
+
+Recommended environment:
+
+```text
+Ubuntu 20.04
+Python 3.8+
+PyTorch 2.5.1
+CUDA 12.1
+torchvision
+numpy
+opencv-python
+Pillow
+tqdm
+scipy
+matplotlib
 ```
 
-Install the PyTorch build that matches your CUDA version.
+Install example:
+
+```bash
+conda create -n gsdtnet python=3.8
+conda activate gsdtnet
+
+pip install torch torchvision
+pip install numpy opencv-python Pillow tqdm scipy matplotlib
+```
+
+Please install a PyTorch version compatible with your CUDA environment.
+
+---
 
 ## Dataset Preparation
 
-Prepare the dataset directory as follows:
+GSDTNet is trained and evaluated on public COD benchmark datasets including CAMO, COD10K, and NC4K.
+
+Default dataset root in `utils/config.py`:
+
+```text
+/root/autodl-tmp/data
+```
+
+Expected dataset structure:
 
 ```text
 data/
@@ -87,7 +192,12 @@ data/
     │   ├── GT/
     │   ├── Depth/
     │   └── Edge/
-    └── NC4K/
+    ├── NC4K/
+    │   ├── Imgs/
+    │   ├── GT/
+    │   ├── Depth/
+    │   └── Edge/
+    └── CHAMELEON/
         ├── Imgs/
         ├── GT/
         ├── Depth/
@@ -96,60 +206,57 @@ data/
 
 Notes:
 
-- `Imgs/` contains RGB images.
-- `GT/` contains binary ground-truth masks.
-- `Depth/` contains offline pseudo-depth maps.
-- `Edge/` contains edge supervision maps generated from the object masks.
+- `Depth/` contains pseudo-depth maps generated offline.
+- `Edge/` contains boundary maps generated from ground-truth masks for auxiliary edge supervision.
+- File names in `Imgs/`, `GT/`, `Depth/`, and `Edge/` should have the same stem.
 
-Pseudo-depth maps can be generated offline with Depth Anything V2 or another monocular depth estimator. The COD network itself only loads the generated depth maps during training and inference.
+---
 
 ## Training
 
-Run training with:
+Example training command:
 
 ```bash
 python train.py \
   --dataset_dir /path/to/data \
-  --save_dir ./results/GSDTNet \
-  --epochs 180 \
-  --batch_size 16 \
+  --epochs 200 \
+  --batch_size 32 \
   --trainsize 384 \
-  --amp
+  --seed 42 \
+  --save_dir ./results/GSDTNet
 ```
 
-Useful options:
-
-- `--dataset_dir`: root directory of the prepared datasets.
-- `--save_dir`: directory for checkpoints and logs.
-- `--resume`: resume training from a checkpoint.
-- `--amp`: enable automatic mixed precision.
-- `--no_ema`: disable EMA checkpoint tracking.
-
-The script saves:
+Training outputs:
 
 ```text
 results/GSDTNet/
 ├── best.pth
 ├── latest.pth
-├── epoch_*.pth
-├── config.json
 ├── train.log
-└── train_epoch_metrics.csv
+├── train_epoch_metrics.csv
+└── config.json
 ```
+
+The training objective uses structure loss for mask prediction and binary cross-entropy loss for the auxiliary edge prediction.
+
+---
 
 ## Inference
 
-Generate prediction maps from a checkpoint:
+Run inference with a trained checkpoint:
 
 ```bash
 python inference.py \
   --ckpt ./results/GSDTNet/best.pth \
   --dataset_dir /path/to/data \
   --datasets CAMO COD10K NC4K \
+  --test_size 384 \
   --save_dir ./results/GSDTNet/prediction_maps
 ```
 
-Prediction maps are saved under:
+By default, inference uses EMA weights if they are available in the checkpoint. Add `--use_raw` to evaluate raw model weights.
+
+Expected prediction output:
 
 ```text
 results/GSDTNet/prediction_maps/
@@ -158,15 +265,11 @@ results/GSDTNet/prediction_maps/
 └── NC4K/
 ```
 
-To save auxiliary visualization panels, add:
-
-```bash
---save_aux
-```
+---
 
 ## Evaluation
 
-Evaluate prediction maps:
+Evaluate saved prediction maps:
 
 ```bash
 python evaluate.py \
@@ -176,7 +279,7 @@ python evaluate.py \
   --save_json
 ```
 
-You can also run inference and evaluation together by passing a checkpoint:
+You can also evaluate directly from a checkpoint. If prediction maps are missing, the script will first run inference:
 
 ```bash
 python evaluate.py \
@@ -186,35 +289,63 @@ python evaluate.py \
   --save_json
 ```
 
-The evaluation script reports:
+Metrics:
 
-- `sm`: Structure-measure
-- `emAdp`: adaptive E-measure
-- `wfm`: weighted F-measure
-- `mae`: Mean Absolute Error
+- S-measure
+- adaptive E-measure
+- weighted F-measure
+- MAE
 
-## Model Components
+---
 
-The main model is implemented in `Model/GSDTNet.py`.
+## Quantitative Results
 
-- `PseudoRGBDAdapter`: projects RGB and pseudo-depth into a 3-channel pseudo-RGB-D input.
-- `GSDT`: performs semantic-detail cross attention, depth-guided geometry gating, and semantic region residual compensation.
-- `CGGDecoder`: fuses top-down encoder features and produces mask and edge predictions.
-- `GSDTNet`: integrates the adapter, EfficientNet-B0 encoder, GSDT module, and decoder.
+The following table reports the GSDTNet results from the submitted manuscript.
 
-## Citation
+| Dataset | S-measure ↑ | E-measure ↑ | Weighted F-measure ↑ | MAE ↓ |
+|---|---:|---:|---:|---:|
+| CAMO | 0.871 | 0.921 | 0.819 | 0.047 |
+| COD10K | 0.854 | 0.911 | 0.752 | 0.026 |
+| NC4K | 0.875 | 0.924 | 0.816 | 0.036 |
 
-If this repository is useful for your research, please cite the paper:
+Efficiency:
 
-```bibtex
-@inproceedings{gsdtnet,
-  title     = {GSDTNet: Geometry-aware Semantic-Detail Transformer for Lightweight Pseudo-RGB-D Camouflaged Object Detection},
-  author    = {First Author and Second Author},
-  booktitle = {Proceedings},
-  year      = {2026}
-}
+| Model | Params ↓ | FLOPs ↓ | Input size |
+|---|---:|---:|---|
+| GSDTNet | 4.13M | 1.52G | 384 × 384 |
+
+Params and FLOPs exclude offline pseudo-depth generation.
+
+---
+
+## Reproducibility Notes
+
+- The repository contains only the final GSDTNet implementation.
+- Pseudo-depth maps are fixed auxiliary inputs during training and inference.
+- The main prediction used for evaluation is `m1`.
+- The `region_scale` parameter in GSDT is zero-initialized so that the semantic region residual branch is learned progressively during training.
+- Experimental results may vary slightly because of GPU environment, random seed, dataset preprocessing, and pseudo-depth generation details.
+
+---
+
+## License
+
+This repository is released for academic research purposes only.
+
+Commercial use is not permitted without permission from the authors.
+
+---
+
+## Acknowledgements
+
+We sincerely thank the authors of CAMO, COD10K, NC4K, SINet, Depth Anything V2, and other public COD resources.
+
+---
+
+## Contact
+
+For questions, please contact:
+
+```text
+carbonsir@126.com
 ```
-
-## Acknowledgement
-
-This implementation uses EfficientNet-B0 as the lightweight backbone and follows common COD training and evaluation protocols. We thank the authors of the public COD benchmarks and related open-source projects.
