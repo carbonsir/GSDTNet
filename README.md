@@ -10,15 +10,12 @@ If you use this code, trained weights, prediction maps, pseudo-depth maps, or ex
 The manuscript is currently under submission. The official citation information will be updated after the paper is accepted or published.
 
 ```bibtex
-@article{gsdtnet2026,
-  title={GSDTNet: Geometry-aware Semantic-Detail Transformer for Lightweight Pseudo-RGB-D Camouflaged Object Detection},
-  author={Authors},
-  journal={The Visual Computer},
-  year={2026},
-  note={Manuscript submitted.}
+@misc{gsdtnet2026,
+  title        = {GSDTNet: Geometry-aware Semantic-Detail Transformer for Lightweight Pseudo-RGB-D Camouflaged Object Detection},
+  author       = {Authors},
+  year         = {2026},
+  note         = {Manuscript submitted to The 9th Chinese Conference on Pattern Recognition and Computer Vision, PRCV 2026}
 }
-```
-
 ---
 
 ## Abstract
@@ -45,17 +42,12 @@ To improve reproducibility, this repository provides or points to source code, t
 
 ### Model weights and prediction maps
 
-| Resource | Baidu Netdisk | Extraction Code |
-|---|---|---|
-| GSDTNet prediction maps / experimental results | https://pan.baidu.com/s/1esOes8En-lfgAugIYQvs4A?pwd=wpe7 | wpe7 |
-| GSDTNet pre-trained weights | https://pan.baidu.com/s/1Iz02YaItxvPlpAuICyeblg?pwd=e4x4 | e4x4 |
-
 Google Drive mirrors:
 
 | Resource | Link |
 |---|---|
-| GSDTNet pre-trained weights | [Google Drive](https://drive.google.com/file/d/1wR6ukLUXvJ8hfVT5eq1mjOUVM7dLZSuv/view?usp=drive_link) |
-| GSDTNet prediction maps / experimental results | [Google Drive](https://drive.google.com/file/d/1BsBFn1SP_b7-lmGgtcYH0jMr402GDekE/view?usp=drive_link) |
+| GSDTNet pre-trained weights | [Google Drive](https://drive.google.com/file/d/1WZlSN59lzaSjlXx1Pw2p_27j2FRi7pXo/view?usp=drive_link) |
+| GSDTNet prediction maps / experimental results | [Google Drive](https://drive.google.com/file/d/1mIBnBQHwlc4nUCdYeS9R6bVkZr55EOMi/view?usp=drive_link) |
 
 ### Pseudo-depth maps
 
@@ -73,10 +65,10 @@ Raw COD images are not redistributed in this repository because of dataset licen
 | Dataset Resource | Google Drive / Project Page | Baidu Netdisk / Code |
 |---|---|---|
 | CAMO dataset | [CAMO project page](https://sites.google.com/view/ltnghia/research/camo) | - |
-| COD10K training set | [Google Drive](https://drive.google.com/file/d/1D9bf1KeeCJsxxri6d2qAC7z6O1X_fxpt/view?usp=sharing) | Baidu code: `djq2` |
-| COD10K-test + CAMO-test + CHAMELEON test set | [Google Drive](https://drive.google.com/file/d/1QEGnP9O7HbN_2tH999O3HRIsErIVYalx/view?usp=sharing) | Baidu code: `z83z` |
-| COD10K full package | [Google Drive](https://drive.google.com/file/d/1vRYAie0JcNStcSwagmCq55eirGyMYGm5/view?usp=sharing) | Baidu code: `w3up` |
-| NC4K test set | [Google Drive](https://drive.google.com/file/d/1kzpX_U3gbgO9MuwZIWTuRVpiB7V6yrAQ/view?usp=sharing) | Baidu code: `d581` |
+| COD10K training set | [Google Drive](https://drive.google.com/file/d/1D9bf1KeeCJsxxri6d2qAC7z6O1X_fxpt/view?usp=sharing) |
+| COD10K-test + CAMO-test + CHAMELEON test set | [Google Drive](https://drive.google.com/file/d/1QEGnP9O7HbN_2tH999O3HRIsErIVYalx/view?usp=sharing) |
+| COD10K full package | [Google Drive](https://drive.google.com/file/d/1vRYAie0JcNStcSwagmCq55eirGyMYGm5/view?usp=sharing) |
+| NC4K test set | [Google Drive](https://drive.google.com/file/d/1kzpX_U3gbgO9MuwZIWTuRVpiB7V6yrAQ/view?usp=sharing) |
 
 ---
 
