@@ -58,7 +58,7 @@ GSDTNet uses fixed pseudo-depth maps as auxiliary inputs. The manuscript experim
 | Resource | Link |
 |---|---|
 | Depth Anything V2 code and model checkpoints | [Official GitHub](https://github.com/DepthAnything/Depth-Anything-V2) |
-| Pre-generated pseudo-depth maps for this repository | To be updated by the authors |
+| Pre-generated pseudo-depth maps for this repository |[Google Drive](https://drive.google.com/file/d/15jOTGaGACdK68Eu91GN94793Z07ZSHBo/view?usp=drive_link) |
 
 ### COD benchmark datasets
 
