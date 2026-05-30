@@ -16,7 +16,7 @@ The manuscript is currently under submission. The official citation information 
   year         = {2026},
   note         = {Manuscript submitted to The 9th Chinese Conference on Pattern Recognition and Computer Vision, PRCV 2026}
 }
----
+```
 
 ---
 
