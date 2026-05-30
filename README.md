@@ -65,7 +65,7 @@ GSDTNet uses fixed pseudo-depth maps as auxiliary inputs. The manuscript experim
 Raw COD images are not redistributed in this repository because of dataset license restrictions. Please download the original datasets from the official or commonly used benchmark sources and organize them as described below.
 
 | Dataset Resource | Google Drive / Project Page |
-|---|---|---|
+|---|---|
 | CAMO dataset | [CAMO project page](https://sites.google.com/view/ltnghia/research/camo) |
 | COD10K training set | [Google Drive](https://drive.google.com/file/d/1D9bf1KeeCJsxxri6d2qAC7z6O1X_fxpt/view?usp=sharing) |
 | COD10K-test + CAMO-test + CHAMELEON test set | [Google Drive](https://drive.google.com/file/d/1QEGnP9O7HbN_2tH999O3HRIsErIVYalx/view?usp=sharing) |
