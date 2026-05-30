@@ -2,21 +2,11 @@
 
 [![Manuscript](https://img.shields.io/badge/Manuscript-Submitted-blue)](#paper-and-code-relationship)
 [![License](https://img.shields.io/badge/License-Academic%20Research-lightgrey.svg)](#license)
+## Citation
 
-## Recommended Citation
+This manuscript has been submitted to The 9th Chinese Conference on Pattern Recognition and Computer Vision, PRCV 2026, and is currently under review.
 
-If you use this code, trained weights, prediction maps, pseudo-depth maps, or experimental results in your research, please cite the related manuscript.
-
-The manuscript is currently under submission. The official citation information will be updated after the paper is accepted or published.
-
-```bibtex
-@misc{gsdtnet2026,
-  title        = {GSDTNet: Geometry-aware Semantic-Detail Transformer for Lightweight Pseudo-RGB-D Camouflaged Object Detection},
-  author       = {Authors},
-  year         = {2026},
-  note         = {Manuscript submitted to The 9th Chinese Conference on Pattern Recognition and Computer Vision, PRCV 2026}
-}
-```
+The formal citation information will be updated after acceptance.
 
 ---
 
