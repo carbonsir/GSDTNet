@@ -14,7 +14,7 @@ class Config:
         self.CUDA = torch.cuda.is_available()
         self.device = torch.device('cuda' if self.CUDA else 'cpu')
 
-        # Training defaults retained from the provided v4b code path.
+        # Default training hyperparameters.
         self.epochs = 180
         self.batch_size = 16
         self.weight_decay = 1e-4

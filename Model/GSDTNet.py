@@ -1,15 +1,13 @@
 """GSDTNet: Geometry-aware Semantic-Detail Transformer Network.
 
-This file keeps the best-performing v4b_res_region path from the uploaded
-ablation code and removes all other ablation branches. The retained model
-matches the manuscript terminology:
+The model follows the manuscript terminology:
 
     RGB + pseudo-depth -> PseudoRGBDAdapter -> EfficientNet-B0 encoder
     -> GSDT semantic-detail-geometric recalibration -> CGG-style decoder.
 
-No model logic from the v4b_res_region path is changed: the pseudo-RGB-D
-adapter, EfficientNet-B0 feature levels, GSDT geometry gate, zero-initialized
-semantic region residual branch, detail injection scale, and decoder are kept.
+The implementation includes the pseudo-RGB-D adapter, EfficientNet-B0 feature
+levels, GSDT geometry gate, zero-initialized semantic region residual branch,
+detail injection scale, and lightweight CGG decoder.
 """
 
 import torch
@@ -52,16 +50,15 @@ class FeatureProjector(nn.Module):
 class GSDT(nn.Module):
     """Geometry-aware Semantic-Detail Transformer.
 
-    The implementation is the final v4b_res_region branch:
+    Main components:
       - shallow detail feature from F1 and F2;
       - high-level semantic feature from F4 and F5;
       - semantic-detail cross attention;
       - pseudo-depth-derived geometry gate (DGG);
       - zero-initialized semantic region residual compensation (RRC).
 
-    The zero-initialized `region_scale` keeps the initial behavior identical to
-    the boundary-gated GSDT path and lets the region branch become active only
-    when training learns it is useful.
+    The zero-initialized `region_scale` stabilizes early training and lets the
+    region branch become active only when training learns it is useful.
     """
 
     def __init__(self, f1_channels, f2_channels, f4_channels, f5_channels,
@@ -226,9 +223,8 @@ class GSDT(nn.Module):
 class CGGDecoder(nn.Module):
     """Lightweight top-down decoder with mask and edge heads.
 
-    This keeps the decoder logic from the v4b_res_region code path. The module
-    name follows the manuscript, where CGG denotes the lightweight refinement
-    block used after top-down feature aggregation.
+    The module name follows the manuscript, where CGG denotes the lightweight
+    refinement block used after top-down feature aggregation.
     """
 
     def __init__(self, channels=(32, 64, 96, 160), fpn_channels=64, use_edge_refine=True):
@@ -284,7 +280,7 @@ class CGGDecoder(nn.Module):
 
 
 class GSDTNet(nn.Module):
-    """Final GSDTNet model, retaining only the v4b_res_region path."""
+    """GSDTNet model for lightweight pseudo-RGB-D camouflaged object detection."""
 
     def __init__(self, pretrained=True, fuse_channels=(32, 64, 96, 160)):
         super().__init__()
