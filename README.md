@@ -4,19 +4,6 @@
 [![Presentation](https://img.shields.io/badge/Presentation-Poster-green)](#paper-and-code-relationship)
 [![License](https://img.shields.io/badge/License-Academic%20Research-lightgrey.svg)](#license)
 
-## Citation
-
-If you use this code, pretrained weights, prediction maps, pseudo-depth maps, or experimental results in your research, please cite our paper.
-
-```bibtex
-@inproceedings{gsdtnet2026,
-  title     = {GSDTNet: Geometry-Aware Semantic-Detail Transformer for Lightweight Pseudo-RGB-D Camouflaged Object Detection},
-  author    = {Song, Tan and Li, Jinbao},
-  booktitle = {Proceedings of the 9th Chinese Conference on Pattern Recognition and Computer Vision, PRCV 2026},
-  year      = {2026},
-  note      = {Accepted for poster presentation}
-}
-
 ## Abstract
 
 <p align="justify">
@@ -37,6 +24,35 @@ The reported parameters and FLOPs correspond to the proposed COD detection netwo
 
 ---
 
+## Authors
+
+- Tan Song
+- Jinbao Li
+
+Corresponding author: **Jinbao Li**
+
+For academic questions about the paper, please contact the corresponding author. For code-related questions, please open an issue in this repository.
+
+---
+
+## Citation
+
+If you use this code, pretrained weights, prediction maps, pseudo-depth maps, or experimental results in your research, please cite our paper.
+
+```bibtex
+@inproceedings{gsdtnet2026,
+  title     = {GSDTNet: Geometry-Aware Semantic-Detail Transformer for Lightweight Pseudo-RGB-D Camouflaged Object Detection},
+  author    = {Song, Tan and Li, Jinbao},
+  booktitle = {Proceedings of the 9th Chinese Conference on Pattern Recognition and Computer Vision, PRCV 2026},
+  year      = {2026},
+  note      = {Accepted for poster presentation}
+}
+```
+
+The official citation information will be updated after the proceedings version and DOI become available.
+
+---
+
 ## Download Resources
 
 To improve reproducibility, this repository provides or points to source code, trained model weights, prediction maps, pseudo-depth preparation, and COD benchmark datasets.
@@ -47,17 +63,17 @@ Google Drive mirrors:
 
 | Resource | Link |
 |---|---|
-| GSDTNet pre-trained weights | [Google Drive](https://drive.google.com/file/d/1WZlSN59lzaSjlXx1Pw2p_27j2FRi7pXo/view?usp=drive_link) |
+| GSDTNet pretrained weights | [Google Drive](https://drive.google.com/file/d/1WZlSN59lzaSjlXx1Pw2p_27j2FRi7pXo/view?usp=drive_link) |
 | GSDTNet prediction maps / experimental results | [Google Drive](https://drive.google.com/file/d/1mIBnBQHwlc4nUCdYeS9R6bVkZr55EOMi/view?usp=drive_link) |
 
 ### Pseudo-depth maps
 
-GSDTNet uses fixed pseudo-depth maps as auxiliary inputs. The manuscript experiments generate pseudo-depth maps offline using Depth Anything V2, and the generated maps should be placed in the `Depth/` folders shown in the dataset structure below.
+GSDTNet uses fixed pseudo-depth maps as auxiliary inputs. In the paper, pseudo-depth maps are generated offline using Depth Anything V2 and then placed in the `Depth/` folders shown in the dataset structure below.
 
 | Resource | Link |
 |---|---|
 | Depth Anything V2 code and model checkpoints | [Official GitHub](https://github.com/DepthAnything/Depth-Anything-V2) |
-| Pre-generated pseudo-depth maps for this repository |[Google Drive](https://drive.google.com/file/d/15jOTGaGACdK68Eu91GN94793Z07ZSHBo/view?usp=drive_link) |
+| Pre-generated pseudo-depth maps for this repository | [Google Drive](https://drive.google.com/file/d/15jOTGaGACdK68Eu91GN94793Z07ZSHBo/view?usp=drive_link) |
 
 ### COD benchmark datasets
 
@@ -79,21 +95,21 @@ Raw COD images are not redistributed in this repository because of dataset licen
 RGB image + pseudo-depth map
     -> PseudoRGBDAdapter
     -> EfficientNet-B0 encoder
-    -> Geometry-aware Semantic-Detail Transformer
+    -> Geometry-Aware Semantic-Detail Transformer
     -> CGGDecoder
     -> mask predictions + auxiliary edge prediction
 ```
 
 Main module correspondence:
 
-| Manuscript term | Code implementation |
+| Paper term | Code implementation |
 |---|---|
 | GSDTNet | `Model/GSDTNet.py::GSDTNet` |
 | Pseudo-RGB-D Adapter | `PseudoRGBDAdapter` |
 | EfficientNet-B0 Encoder | `GSDTNet.encoder` |
-| Geometry-aware Semantic-Detail Transformer | `GSDT` |
-| Depth-guided Geometry Gate | `GSDT.depth_guided_geometry_gate` |
-| Semantic Region Residual Compensation | `GSDT.semantic_region_gate` and zero-initialized `region_scale` |
+| Geometry-Aware Semantic-Detail Transformer (GSDT) | `GSDT` |
+| Pseudo-depth-guided Geometry Gate (DGG) | `GSDT.depth_guided_geometry_gate` |
+| Semantic Region Residual Compensation (RRC) | `GSDT.semantic_region_gate` and zero-initialized `region_scale` |
 | CGG Decoder | `CGGDecoder` |
 
 ---
@@ -293,7 +309,7 @@ Metrics:
 
 ## Quantitative Results
 
-The following table reports the GSDTNet results from the submitted manuscript.
+The following table reports the GSDTNet results from the accepted PRCV 2026 paper.
 
 | Dataset | S-measure ↑ | E-measure ↑ | Weighted F-measure ↑ | MAE ↓ |
 |---|---:|---:|---:|---:|
@@ -314,7 +330,7 @@ Params and FLOPs exclude offline pseudo-depth generation.
 ## Reproducibility Notes
 
 - The repository contains only the final GSDTNet implementation.
-- Pseudo-depth maps are fixed auxiliary inputs during training and inference.
+- Pseudo-depth maps are generated offline and used as fixed auxiliary inputs during training and testing.
 - The main prediction used for evaluation is `m1`.
 - The `region_scale` parameter in GSDT is zero-initialized so that the semantic region residual branch is learned progressively during training.
 - Experimental results may vary slightly because of GPU environment, random seed, dataset preprocessing, and pseudo-depth generation details.
@@ -332,10 +348,3 @@ Commercial use is not permitted without permission from the authors.
 ## Acknowledgements
 
 We sincerely thank the authors of CAMO, COD10K, NC4K, SINet, Depth Anything V2, and other public COD resources.
-
----
-## Authors
-
-Tan Song and Jinbao Li
-
-Corresponding author: Jinbao Li
