@@ -1,30 +1,39 @@
-# GSDTNet: Geometry-aware Semantic-Detail Transformer for Lightweight Pseudo-RGB-D Camouflaged Object Detection
+# GSDTNet: Geometry-Aware Semantic-Detail Transformer for Lightweight Pseudo-RGB-D Camouflaged Object Detection
 
-[![Manuscript](https://img.shields.io/badge/Manuscript-Submitted-blue)](#paper-and-code-relationship)
+[![Paper](https://img.shields.io/badge/Paper-PRCV%202026%20Accepted-blue)](#paper-and-code-relationship)
+[![Presentation](https://img.shields.io/badge/Presentation-Poster-green)](#paper-and-code-relationship)
 [![License](https://img.shields.io/badge/License-Academic%20Research-lightgrey.svg)](#license)
+
 ## Citation
 
-This manuscript has been submitted to The 9th Chinese Conference on Pattern Recognition and Computer Vision, PRCV 2026, and is currently under review.
+If you use this code, pretrained weights, prediction maps, pseudo-depth maps, or experimental results in your research, please cite our paper.
 
-The formal citation information will be updated after acceptance.
-
----
+```bibtex
+@inproceedings{gsdtnet2026,
+  title     = {GSDTNet: Geometry-Aware Semantic-Detail Transformer for Lightweight Pseudo-RGB-D Camouflaged Object Detection},
+  author    = {Song, Tan and Li, Jinbao},
+  booktitle = {Proceedings of the 9th Chinese Conference on Pattern Recognition and Computer Vision, PRCV 2026},
+  year      = {2026},
+  note      = {Accepted for poster presentation}
+}
 
 ## Abstract
 
 <p align="justify">
-Camouflaged object detection (COD) remains challenging due to weak foreground-background contrast, ambiguous boundaries, and complex object structures. Existing lightweight COD models often struggle to recover fine object details, while introducing an additional dense depth branch may bring noisy geometric responses and extra computational cost. In this paper, we propose GSDTNet, a lightweight pseudo-RGB-D COD network built upon a Geometry-aware Semantic-Detail Transformer (GSDT). GSDT recalibrates shallow detail features under high-level semantic guidance, enabling the network to enhance target-relevant structures while suppressing background distractions. Meanwhile, pseudo-depth-derived geometric cues are used as lightweight structural guidance to improve boundary and shape localization. With a single-stream pseudo-RGB-D encoder and a lightweight decoder, GSDTNet achieves a favorable accuracy-efficiency trade-off with only 4.13M parameters and 1.52G FLOPs. Experiments on CAMO, COD10K, and NC4K show that GSDTNet achieves superior performance over representative lightweight COD methods, while ablation studies and visualizations verify the effectiveness of GSDT. The source code and results of our method are available at https://anonymous.4open.science/r/GSDTNet-2C10/.
+Camouflaged object detection (COD) remains challenging due to weak foreground-background contrast, ambiguous boundaries, and complex object structures. Existing lightweight COD models often lose fine object details, while dense depth branches may introduce noisy geometric responses and additional computational cost. In this paper, we propose GSDTNet, a lightweight pseudo-RGB-D COD network built upon a Geometry-Aware Semantic-Detail Transformer (GSDT). GSDT recalibrates shallow detail features under high-level semantic guidance and uses pseudo-depth-derived geometric cues as lightweight structural guidance to improve boundary and shape localization. The proposed COD network contains only 4.13M parameters and requires 1.52G FLOPs, where the reported complexity refers to the detection network itself and excludes offline pseudo-depth generation. Experiments on CAMO, COD10K, and NC4K show that GSDTNet achieves superior performance over representative lightweight COD methods, while ablation studies and visualizations verify the effectiveness of GSDT.
 </p>
 
 ---
 
 ## Paper and Code Relationship
 
-This repository contains the implementation corresponding to the submitted manuscript:
+This repository contains the official implementation of the paper:
 
-**GSDTNet: Geometry-aware Semantic-Detail Transformer for Lightweight Pseudo-RGB-D Camouflaged Object Detection**
+**GSDTNet: Geometry-Aware Semantic-Detail Transformer for Lightweight Pseudo-RGB-D Camouflaged Object Detection**
 
-The paper is currently in the manuscript submission stage. If you use this repository, please cite the submitted manuscript. The BibTeX entry will be updated after formal acceptance or publication.
+The paper has been accepted by **The 9th Chinese Conference on Pattern Recognition and Computer Vision, PRCV 2026** for **poster presentation**.
+
+The reported parameters and FLOPs correspond to the proposed COD detection network itself. Pseudo-depth maps are generated offline by Depth Anything V2 and used as fixed auxiliary inputs during training and testing. Therefore, the cost of offline pseudo-depth generation is not included in the reported detection-network complexity.
 
 ---
 
@@ -114,7 +123,7 @@ Only the final GSDTNet model code is included in this clean repository.
 
 ## Requirements
 
-The manuscript experiments were conducted with PyTorch 2.5.1 on a single NVIDIA RTX 3090 GPU.
+The experiments were conducted with PyTorch 2.5.1 on a single NVIDIA RTX 3090 GPU.
 
 Recommended environment:
 
@@ -325,11 +334,8 @@ Commercial use is not permitted without permission from the authors.
 We sincerely thank the authors of CAMO, COD10K, NC4K, SINet, Depth Anything V2, and other public COD resources.
 
 ---
+## Authors
 
-## Contact
+Tan Song and Jinbao Li
 
-For questions, please contact:
-
-```text
-XXXX@XXXX.com
-```
+Corresponding author: Jinbao Li
